@@ -20,8 +20,13 @@ namespace WebApplication
         {
             _requestContext = requestContext;
         }
+        void TestMethod()
+        {
+
+        }
         private object GetController(Type type)
         {
+            //tmp comment
             Type newObjectType=type;
             ConstructorInfo constructor;
             if (DiManager.Injections.ContainsKey(type))
