@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Routing;
 using WebApplication.DI;
 using WebApplication.Implementation;
-using WebApplication.Routing;
 
 namespace WebApplication
 {
@@ -49,13 +48,23 @@ namespace WebApplication
             context.Response.ContentType = "text/plain";
             //context.Response.Write("Привет всем!");
             var tmp = _requestContext.HttpContext.Request.Path;
-            MyRouteManager.RegisterRoutes();
             var path = tmp.Split('/');
-            string controllerName = MyRouteManager.Routes[path[1].Substring(0, 1).ToUpper() + path[1].Substring(1, path[1].Length - 1).ToLower()];
-            //
-            string actionName =path[2];
+            int controllerIndex = 1, actionIndex=2;
+
+            string controllerName = RouteConfig.Routes.SingleOrDefault(x => x.Key.ToLower() == path[controllerIndex].ToLower()).Value;
+               
+            string actionName =path[actionIndex];
             object result;
-            switch (controllerName)
+            Type controllerType = Type.GetType($"WebApplication.{controllerName}Controller", false, false);
+            foreach (MethodInfo method in controllerType.GetMethods())
+            {
+                if (actionName.ToLower() == method.Name.ToLower())
+                {
+                    result = controllerType.GetMethod(method.Name).Invoke(GetController(controllerType), null);
+                    context.Response.Write(result);
+                }
+            }
+            /*switch (controllerName)
             {
                 case "Index":
                     IndexController index =GetController(typeof(IndexController)) as IndexController;
@@ -89,7 +98,7 @@ namespace WebApplication
                 default:
                     break;
             }
-
+            */
             //object result = new IndexController(new ProductsService(new Repository())).Index();
             
         }

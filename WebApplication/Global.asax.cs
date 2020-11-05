@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using WebApplication.DI;
-using WebApplication.Routing;
 
 namespace WebApplication
 {
@@ -13,7 +12,6 @@ namespace WebApplication
     {
         protected void Application_Start()
         {
-            //MyRouteManager.RegisterRoutes();
             DiManager.InitDependencies();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);

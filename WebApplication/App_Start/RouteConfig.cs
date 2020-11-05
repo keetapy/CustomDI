@@ -20,19 +20,12 @@ namespace WebApplication
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { id = UrlParameter.Optional }
-            //);
-
-            //Route newRoute = new Route("{controller}/{action}", new MyRouteHandler());
-            //routes.Add(newRoute);
+            RegisterRoutes();
             Route newRoute = new Route("Home/Index", new MyRouteHandler());
             routes.Add(newRoute);
             newRoute= new Route("Order/GetData", new MyRouteHandler());
             routes.Add(newRoute);
+
         }
     }
 }
