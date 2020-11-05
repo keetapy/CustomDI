@@ -19,6 +19,10 @@ namespace WebApplication
         public HandlerMVC(RequestContext requestContext)
         {
             _requestContext = requestContext;
+        } 
+        string TestMethod()
+        {
+            return "";
         }
         private object GetController(Type type)
         {
